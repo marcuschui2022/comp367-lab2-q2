@@ -3,9 +3,9 @@ pipeline {
     tools {
         maven 'Maven 3.9.6'
     }
-    environment {
-        DockerHubCredentials=credentialsId('DockerHub_Token')
-    }
+//     environment {
+//         DockerHubCredentials=credentialsId('DockerHub_Token')
+//     }
     stages {
         stage('Check out') {  // Check out stage
             steps {
@@ -31,7 +31,7 @@ pipeline {
         stage('Docker Login') {  // Docker login stage
             steps {
                 withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
-                    sh "docker login -u ${USERNAME} -p ${dockerToken}"
+                    sh "docker login -u marcusyuk -p ${dockerToken}"
                 }
             }
         }
