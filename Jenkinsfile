@@ -38,17 +38,10 @@ pipeline {
                sh "docker login -u marcusyuk -p ${DOCKERHUB_PWD}"
             }
         }
-//         stage('Docker Login') {  // Docker login stage
-//             steps {
-//                 withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
-//                     sh "docker login -u marcusyuk -p ${env.dockerToken}"
-//                 }
-//             }
-//         }
-//         stage('Docker Push') {  // Docker push stage
-//             steps {
-//                 sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
-//             }
-//         }
+        stage('Docker Push') {  // Docker push stage
+            steps {
+                sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
+            }
+        }
     }
 }
