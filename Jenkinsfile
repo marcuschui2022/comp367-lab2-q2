@@ -36,7 +36,7 @@ pipeline {
         stage('Docker Login') {  // Docker login stage
             steps {
                 withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
-                    sh "docker login -u marcusyuk -p ${dockerToken}"
+                    sh "docker login -u marcusyuk -p ${env.dockerToken}"
                 }
             }
         }
