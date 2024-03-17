@@ -20,9 +20,16 @@ pipeline {
         }
         stage('Code Coverage') {  // Code coverage stage
             steps {
-                sh "mvn test jacoco:report"
+                sh "mvn jacoco:report"
             }
         }
+        stage('Build & Test with JaCoCo') {
+            steps {
+                script {
+                    sh 'mvn clean verify jacoco:report'
+                }
+            }
+         }
         stage('Docker Build') {  // Docker build stage
             steps {
                 sh "docker build -t marcusyuk/comp367-lab3-q1:${BUILD_NUMBER} ."
@@ -41,12 +48,12 @@ pipeline {
     }
 
     post {
-                    success {
-                        jacoco(
-                            execPattern: '**/build/jacoco/*.exec',
-                            classPattern: '**/build/classes/java/main',
-                            sourcePattern: '**/src/main'
-                        )
-                    }
+        success {
+            jacoco(
+                execPattern: '**/build/jacoco/*.exec',
+                classPattern: '**/build/classes/java/main',
+                sourcePattern: '**/src/main'
+            )
+        }
     }
 }
