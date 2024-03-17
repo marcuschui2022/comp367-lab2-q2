@@ -23,22 +23,22 @@ pipeline {
 //                 sh "mvn jacoco:report"
 //             }
 //         }
-        stage('Docker Build') {  // Docker build stage
-            steps {
-                sh "docker build -t marcusyuk/comp367-lab3-q1:${BUILD_NUMBER} ."
-            }
-        }
-        stage('Docker Login') {  // Docker login stage
-            steps {
-                withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
-                    sh "docker login -u marcusyuk -p ${dockerToken}"
-                }
-            }
-        }
-        stage('Docker Push') {  // Docker push stage
-            steps {
-                sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
-            }
-        }
+//         stage('Docker Build') {  // Docker build stage
+//             steps {
+//                 sh "docker build -t marcusyuk/comp367-lab3-q1:${BUILD_NUMBER} ."
+//             }
+//         }
+//         stage('Docker Login') {  // Docker login stage
+//             steps {
+//                 withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
+//                     sh "docker login -u marcusyuk -p ${dockerToken}"
+//                 }
+//             }
+//         }
+//         stage('Docker Push') {  // Docker push stage
+//             steps {
+//                 sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
+//             }
+//         }
     }
 }
