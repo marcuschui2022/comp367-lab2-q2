@@ -12,9 +12,9 @@ public class HelloWorldController {
         LocalTime currentTime = LocalTime.now();
 
         if (currentTime.isAfter(LocalTime.NOON)) {
-            return "Good morning, Kwok Yuk Chui";
+            return "Good Afternoon, Kwok Yuk Chui";
         } else {
-            return "Good morning, Kwok Yuk Chui";
+            return "Good Morning, Kwok Yuk Chui";
         }
     }
 }
