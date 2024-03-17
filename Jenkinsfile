@@ -23,6 +23,11 @@ pipeline {
 //                 sh "mvn jacoco:report"
 //             }
 //         }
+        stage('Docker Build') {  // Docker build stage
+            steps {
+                sh "docker build -t marcusyuk/comp367-lab3-q1 ."
+            }
+        }
 //         stage('Docker Build') {  // Docker build stage
 //             steps {
 //                 sh "docker build -t marcusyuk/comp367-lab3-q1:${BUILD_NUMBER} ."
