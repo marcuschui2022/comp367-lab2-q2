@@ -1,26 +1,43 @@
 pipeline {
     agent any
-
     tools {
         maven 'Maven 3.9.6'
     }
-
+    environment {
+        DockerHubCredentials=credentialsId('DockerHub_Token')
+    }
     stages {
-        stage('Build') {
+        stage('Check out') {  // Check out stage
             steps {
                 git branch: 'main', url: 'https://github.com/marcuschui2022/comp367-lab2-q2'
+            }
+        }
+        stage('Build') {  // Build maven project stage
+            steps {
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                // sh "mvn clean install"
             }
         }
-        stage('Run Application') {
+        stage('Code Coverage') {  // Code coverage stage
             steps {
-                sh "java -jar target/lab2-0.0.1-SNAPSHOT.jar &"
+                sh "mvn jacoco:report"
             }
         }
-        stage('Test Application') {
+        stage('Docker Build') {  // Docker build stage
             steps {
-                sh "sleep 10"
-                sh 'curl -X GET http://localhost:5001/'
+                sh "docker build -t marcusyuk/comp367-lab3-q1:${BUILD_NUMBER} ."
+            }
+        }
+        stage('Docker Login') {  // Docker login stage
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', passwordVariable: 'password', usernameVariable: 'username')]) {
+                    sh "docker login -u ${username} -p ${password}"
+                }
+            }
+        }
+        stage('Docker Push') {  // Docker push stage
+            steps {
+                sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
             }
         }
     }
