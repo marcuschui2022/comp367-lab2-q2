@@ -54,6 +54,13 @@ pipeline {
                 execPattern: '**/build/jacoco/*.exec',
                 classPattern: '**/build/classes/java/main',
                 sourcePattern: '**/src/main'
+                check: [                             // Optional: define criteria for code coverage checks
+                                    minimumInstructionCoverage: '50',
+                                    minimumBranchCoverage: '50',
+                                    minimumClassCoverage: '50',
+                                    minimumMethodCoverage: '50',
+                                    minimumLineCoverage: '50'
+                                ]
             )
         }
     }
