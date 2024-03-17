@@ -3,9 +3,9 @@ pipeline {
     tools {
         maven 'Maven 3.9.6'
     }
-//     environment {
-//         DockerHubCredentials=credentialsId('DockerHub_Token')
-//     }
+    environment {
+        DOCKERHUB_PWD=credentials('DockerHub_Token')
+    }
     stages {
         stage('Check out') {  // Check out stage
             steps {
@@ -35,11 +35,16 @@ pipeline {
         }
         stage('Docker Login') {  // Docker login stage
             steps {
-                withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
-                    sh "docker login -u marcusyuk -p ${env.dockerToken}"
-                }
+               sh "docker login -u marcusyuk -p ${DOCKERHUB_PWD}"
             }
         }
+//         stage('Docker Login') {  // Docker login stage
+//             steps {
+//                 withCredentials([string(credentialsId: 'DockerHubToken', variable: 'dockerToken')]) {
+//                     sh "docker login -u marcusyuk -p ${env.dockerToken}"
+//                 }
+//             }
+//         }
 //         stage('Docker Push') {  // Docker push stage
 //             steps {
 //                 sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
