@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'Maven 3.9.6'
+        dockerTool 'Docker'
     }
 //     environment {
 //         DockerHubCredentials=credentialsId('DockerHub_Token')
