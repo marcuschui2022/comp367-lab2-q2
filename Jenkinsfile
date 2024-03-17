@@ -38,5 +38,16 @@ pipeline {
                 sh "docker push marcusyuk/comp367-lab3-q1:${BUILD_NUMBER}"
             }
         }
+        post {
+                always {
+                    //jacoco(execPattern: '**/*/target/site/jacoco/jacoco.xml')
+                    jacoco(
+                        execPattern: '**/**.exec',
+                        classPattern: '**/classes',
+                        sourcePattern: '**/src/main/java',
+                        changeBuildStatus: false
+                    )
+                }
+        }
     }
 }
