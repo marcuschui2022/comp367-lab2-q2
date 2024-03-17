@@ -14,22 +14,23 @@ pipeline {
         }
         stage('Build') {  // Build maven project stage
             steps {
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh "mvn clean package"
+//                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
                 // sh "mvn clean install"
             }
         }
         stage('Code Coverage') {  // Code coverage stage
             steps {
-                sh "mvn jacoco:report"
+                sh "mvn test jacoco:report"
             }
         }
-        stage('Build & Test with JaCoCo') {
-            steps {
-                script {
-                    sh 'mvn clean verify jacoco:report'
-                }
-            }
-         }
+//         stage('Build & Test with JaCoCo') {
+//             steps {
+//                 script {
+//                     sh 'mvn clean verify jacoco:report'
+//                 }
+//             }
+//          }
         stage('Docker Build') {  // Docker build stage
             steps {
                 sh "docker build -t marcusyuk/comp367-lab3-q1:${BUILD_NUMBER} ."
